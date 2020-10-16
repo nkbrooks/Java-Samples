@@ -1,0 +1,182 @@
+/*Basic Linked Lists - By Natalie Brooks*/
+/*This program creates a simple linked list with two nodes with a variety of function*/
+package listClasses;
+
+ import java.util.ArrayList;
+ import java.util.Comparator;
+ import java.util.Iterator;
+ import java.util.NoSuchElementException;
+ 
+ public class BasicLinkedList<T> extends java.lang.Object implements Iterable<T> {
+ protected Node head;
+ protected Node tail;
+ protected int size;
+
+ protected class Node {
+ T data;
+ Node next;
+
+ public Node(T data, Node next) {
+ this.data = data;
+ this.next = next;
+   }
+ }
+
+public BasicLinkedList() {
+ head = null;
+ tail = null;
+ size = 0;
+ }
+
+public int getSize() {
+  return size;
+  }
+
+ public BasicLinkedList<T> addToEnd(T data) {
+ Node newNode = new Node(data, null);
+
+ if (tail == null) {
+ head = newNode;
+ tail = newNode;
+ 
+ } else {
+  tail.next = newNode;
+  tail = newNode;
+   }
+  size++;
+   return this;
+ }
+
+ public BasicLinkedList<T> addToFront(T data) {
+    if (head == null) {
+    Node newNode = new Node(data, head);
+    head = newNode;
+    tail = newNode;
+   } else { head = new Node(data, head);
+  }
+  size++;
+  return this;
+}
+
+ public T getFirst() {
+ if (head == null) {
+   return null;
+ } else {
+   return head.data;
+   }
+ }
+ public T getLast() {
+ if (tail == null) {
+    return null;
+ } else {
+   return tail.data;
+   }
+ }
+
+ public T retrieveFirstElement() {
+ if (head == null) {
+   return null;
+}
+ T firstData = head.data;
+ head = head.next;
+ if (head == null) {
+  tail = null;
+ }
+ size--;
+ return firstData;
+ }
+
+ public T retrieveLastElement() {
+ if (tail == null) {
+  return null;
+ }
+
+ T lastData = tail.data;
+ removeLastNode();
+
+ if (tail == null) {
+  head = null;
+ }
+
+ return lastData;
+
+ }
+
+ public BasicLinkedList<T> remove(T targetData, Comparator<T> comparator) {
+   Node pointer = head;
+   Node before = null;
+
+  while (pointer != null) {
+   if (comparator.compare(pointer.data, targetData) == 0) { //if the targetData is the same as data at node...
+     if (pointer == head) { //check to see if head needs to be removed
+      head = head.next;
+      pointer = head;
+    } else if (pointer == tail) { //check to see if tail needs to be
+      pointer = null; //this will indicate that the last node will be removed
+      tail = before; //last node is removed
+      before.next = null; //node before tail points toward null
+    } else {
+      before.next = pointer.next;
+      pointer = pointer.next;
+    }
+     size--;
+   } else {
+       before = pointer;
+       pointer = pointer.next;
+     }
+   }
+ return this;
+ }
+
+ public Iterator<T> iterator() {
+ return new Iterator<T>() {
+ Node pointer = head;
+
+ @Override
+ public boolean hasNext() {
+ if (pointer == null) {
+    return false;
+  }
+  return true;
+ }
+
+ @Override
+ public T next() {
+ if (head == null) {
+    throw new NoSuchElementException("Iteration has no more elements");
+ }
+   T data = pointer.data;
+   pointer = pointer.next;
+   return data;
+ }
+public void remove() {
+ throw new UnsupportedOperationException("Not implementing remove");
+      }
+    };
+  }
+ public ArrayList<T> getReverseArrayList() {
+    return getReverseArrayList(head, new ArrayList<T>());
+ }
+ public ArrayList<T> getReverseArrayList(Node pointer, ArrayList<T> list){
+
+if (pointer == null) {
+    return list;
+ }
+ //after checking if pointer = null, new array list is made, add the data of the head to the list.
+   list.add(0, pointer.data);
+    return getReverseArrayList(pointer.next, list);
+ }
+
+ public BasicLinkedList<T> getReverseList() {
+    return getReverseList(head, new BasicLinkedList<T>());
+ }
+
+ private BasicLinkedList<T> getReverseList(Node pointer, BasicLinkedList<T> list) {
+ 
+ if (pointer == null) {
+    return list;
+ }
+
+//after a new list is made, add the head to the list.
+list.addToFront(pointer.data);
+return getReverseList(pointer.next, list); //call the method with the next node
