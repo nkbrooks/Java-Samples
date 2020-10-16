@@ -1,1 +1,1 @@
-# Assembly Language Samples by Natalie Brooks
+# Java Samples by Natalie Brooks
