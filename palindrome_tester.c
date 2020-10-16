@@ -8,8 +8,7 @@ int main() {
     "abba",
     "racecar",
     "swap paws",
-    "not a palindrome",
-    "another non palindrome",
+    ",
     "almost but tsomla",
     NULL,
   };
