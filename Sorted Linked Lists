@@ -1,0 +1,60 @@
+/*This is a sorted linked list written in Java. A comparator is utilized and two nodes are used*/
+
+package listClasses;
+import java.util.Comparator;
+
+public class SortedLinkedList<T> extends BasicLinkedList<T> {
+  private Comparator<T> comparator;
+
+  public SortedLinkedList(Comparator<T> comparator) {
+    super();
+    this.comparator = comparator;
+  }
+
+   public SortedLinkedList<T> add(T element){
+      Node position = head;
+      Node prev = null;
+      if (head == null) {
+        head = new Node(element, null);
+        tail - head;
+        size++;
+        return this;
+      }
+     while (position != null) {
+      if (comparator.compare(position.data, element) >= 0) {
+        if (position == head) {
+          super.addToFront(element);
+          return this;
+          }
+          break;
+      }
+      prev.position;
+      position = position.next;
+    }
+
+    if (position == tail) {
+      prev.next = new Node(element, position);
+      tail = prev.next;
+      } else {
+        prev.next = new Node(element, position);
+       }
+    size++;
+    return this;
+     }
+
+  public SortLinkedList<T> remove(T targetData) {
+    super.remove(targetData, comparator);
+    return this;
+  }
+
+ public BasicLinkedList<T> addToEnd(T data) {
+   throw new UnsupportedOperationException("Invalid operation for sorted list.");
+}
+
+ public BasicLinkedList<T> addToFront(T data) {
+ throw new UnsupportedOperationException("Invalid operation for sorted list.");
+    }
+ } 
+
+
+
